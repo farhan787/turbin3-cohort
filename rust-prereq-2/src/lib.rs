@@ -15,7 +15,7 @@ mod tests {
     use std::io::{self, BufRead};
     use std::str::FromStr;
 
-    use crate::programs::turbin3_prereq::{CompleteArgs, Turbin3PrereqProgram, UpdateArgs};
+    use crate::programs::turbin3_prereq::{CompleteArgs, TurbinePrereqProgram, UpdateArgs};
 
     const RPC_URL: &str = "https://api.devnet.solana.com";
 
@@ -168,7 +168,7 @@ mod tests {
         let signer = read_keypair_file("Turbin3-wallet.json").expect("Couldn't find wallet file");
 
         // Creating our PDA
-        let prereq = Turbin3PrereqProgram::derive_program_address(&[
+        let prereq = TurbinePrereqProgram::derive_program_address(&[
             b"prereq",
             signer.pubkey().to_bytes().as_ref(),
         ]);
@@ -181,7 +181,7 @@ mod tests {
             .get_latest_blockhash()
             .expect("Failed to get recent blockhash");
 
-        let transaction = Turbin3PrereqProgram::complete(
+        let transaction = TurbinePrereqProgram::complete(
             &[&signer.pubkey(), &prereq, &system_program::id()],
             &args,
             Some(&signer.pubkey()),
